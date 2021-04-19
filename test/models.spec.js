@@ -52,9 +52,9 @@ describe('Models', () => {
       it('returns a user', async () => {
         const token = await jwt.sign(
           { id: seed.users.larry.id },
-          process.env.JWT //what happens here?
+          process.env.JWT //this is a secret placeholder
         );
-        const user = await User.byToken(token); // look at method
+        const user = await User.byToken(token);
         expect(user.username).to.equal('larry');
       });
     });

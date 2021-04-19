@@ -32,12 +32,16 @@
           };
           this.login = this.login.bind(this);
           this.logout = this.logout.bind(this);
+          this.exchangeToken = this.exchangeToken.bind(this);
         }
         logout() {
           window.localStorage.removeItem('token');
           this.setState({ auth: {} });
         }
-        async componentDidMount() {
+        componentDidMount() {
+          this.exchangeToken();
+        }
+        async exchangeToken() {
           const token = window.localStorage.getItem('token');
           if (token) {
             const user = (
@@ -53,15 +57,7 @@
         async login(credential) {
           const { token } = (await axios.post('/api/auth', credential)).data;
           window.localStorage.setItem('token', token);
-          const user = (
-            await axios.get('/api/auth', {
-              headers: {
-                authorization: token,
-              },
-            })
-          ).data;
-          console.log(user);
-          this.setState({ auth: user });
+          this.exchangeToken();
         }
 
         render() {

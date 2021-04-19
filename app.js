@@ -11,6 +11,8 @@ app.use(express.json());
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
+// STEP 1
+// Hash password - look at hook in db.js for bcrypt details
 app.post('/api/auth', async (req, res, next) => {
   try {
     res.send({ token: await User.authenticate(req.body) });
